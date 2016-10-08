@@ -132,6 +132,7 @@ public class TestController {
   @RequestMapping(value = "/symbols", method = RequestMethod.GET)
   @ResponseBody
   public List<String> getSymbols(){
+    //list of symbols
     return Arrays.asList(
             "SPY",
             "EEM",

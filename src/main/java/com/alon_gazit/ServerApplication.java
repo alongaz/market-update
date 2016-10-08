@@ -21,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableConfigurationProperties
 @EnableCaching
+// main class
 public class ServerApplication {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ServerApplication.class);
 

@@ -1,7 +1,7 @@
 package com.alon_gazit.controllers;
 
 /**
- * Created by alon.g on 10/6/2016.
+ * Data structure
  */
 public class CalculationResult {
   private String symbol;
