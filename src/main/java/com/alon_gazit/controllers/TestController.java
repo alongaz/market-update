@@ -1,6 +1,6 @@
 package com.alon_gazit.controllers;
 
-import com.google.common.collect.Collections2;
+import com.alon_gazit.model.CalculationResult;
 import com.opencsv.CSVReader;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,6 +20,8 @@ import java.util.List;
 public class TestController {
   private static final String YAHOO_URL_PREFIX= "http://chart.finance.yahoo.com/table.csv?s=";
   private static final String YAHOO_URL_SUFIX= "&a=9&b=6&c=2015&d=5&e=14&f=2048&g=d&ignore=.csv";
+  private static final String YAHOO_REAL_TIME_SUFIX = "&f=l1";
+
 
   public class TestObject {
     private String s;
@@ -104,7 +104,8 @@ public class TestController {
   }
 
   private List<String[]> getHistory(String symbol){
-    String yahooURL = YAHOO_URL_PREFIX+symbol+YAHOO_URL_SUFIX;
+    //String yahooURL = YAHOO_URL_PREFIX+symbol+YAHOO_URL_SUFIX;
+    String yahooURL = YAHOO_URL_PREFIX +symbol + YAHOO_REAL_TIME_SUFIX;
     CSVReader reader = null;
     List<String[]> result = null;
     try {

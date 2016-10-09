@@ -1,4 +1,4 @@
-package com.alon_gazit.controllers;
+package com.alon_gazit.model;
 
 /**
  * Data structure
