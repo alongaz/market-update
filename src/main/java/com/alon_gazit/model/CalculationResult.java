@@ -6,12 +6,8 @@ package com.alon_gazit.model;
 public class CalculationResult {
   private String symbol;
   private double lastPrice;
-  private double _40DaysHigh;
-  private double _20DaysHigh;
-  private double _10DaysHigh;
-  private double _40DaysLow;
-  private double _20DaysLow;
-  private double _10DaysLow;
+  private double entryPrice;
+  private double exitPrice;
   private double range;
   private double positionSize;
 
@@ -32,54 +28,6 @@ public class CalculationResult {
     this.lastPrice = lastPrice;
   }
 
-  public double get_40DaysHigh() {
-    return _40DaysHigh;
-  }
-
-  public void set_40DaysHigh(double _40DaysHigh) {
-    this._40DaysHigh = _40DaysHigh;
-  }
-
-  public double get_20DaysHigh() {
-    return _20DaysHigh;
-  }
-
-  public void set_20DaysHigh(double _20DaysHigh) {
-    this._20DaysHigh = _20DaysHigh;
-  }
-
-  public double get_10DaysHigh() {
-    return _10DaysHigh;
-  }
-
-  public void set_10DaysHigh(double _10DaysHigh) {
-    this._10DaysHigh = _10DaysHigh;
-  }
-
-  public double get_40DaysLow() {
-    return _40DaysLow;
-  }
-
-  public void set_40DaysLow(double _40DaysLow) {
-    this._40DaysLow = _40DaysLow;
-  }
-
-  public double get_20DaysLow() {
-    return _20DaysLow;
-  }
-
-  public void set_20DaysLow(double _20DaysLow) {
-    this._20DaysLow = _20DaysLow;
-  }
-
-  public double get_10DaysLow() {
-    return _10DaysLow;
-  }
-
-  public void set_10DaysLow(double _10DaysLow) {
-    this._10DaysLow = _10DaysLow;
-  }
-
   public double getPositionSize() {
     return positionSize;
   }
@@ -95,4 +43,12 @@ public class CalculationResult {
   public void setRange(double range) {
     this.range = range;
   }
+
+  public double getExitPrice() {return exitPrice;}
+
+  public void setExitPrice(double exitPrice) {this.exitPrice = exitPrice;}
+
+  public double getEntryPrice() {return entryPrice;}
+
+  public void setEntryPrice(double entryPrice) {this.entryPrice = entryPrice;}
 }
