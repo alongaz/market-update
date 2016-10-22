@@ -1,6 +1,7 @@
 package com.alon_gazit.crawler;
 
 import com.opencsv.CSVReader;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by alon.g on 10/12/2016.
  */
+@Component
 public class YahooHistoryCrawler {
     private static final String YAHOO_URL_PREFIX= "http://chart.finance.yahoo.com/table.csv?s=";
     private static final String YAHOO_URL_SUFIX= "&a=9&b=6&c=2015&d=5&e=14&f=2048&g=d&ignore=.csv";
