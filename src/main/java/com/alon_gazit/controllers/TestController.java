@@ -2,6 +2,7 @@ package com.alon_gazit.controllers;
 
 import com.alon_gazit.dao.SymbolsDAO;
 import com.alon_gazit.model.CalculationResult;
+import com.alon_gazit.model.Symbol;
 import com.alon_gazit.services.DailyResultsCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +31,7 @@ public class TestController {
 
   @RequestMapping(value = "/symbols", method = RequestMethod.GET)
   @ResponseBody
-  public List<String> getSymbols(){
+  public List<Symbol> getSymbols(){
     //list of symbols
     return symbolsDAO.getSymbols();
   }

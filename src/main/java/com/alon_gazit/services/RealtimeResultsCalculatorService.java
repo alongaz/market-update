@@ -8,6 +8,7 @@ import com.alon_gazit.dao.SymbolsDAO;
 import com.alon_gazit.model.CalculationResult;
 import com.alon_gazit.model.ExposureValues;
 import com.alon_gazit.model.StrategyValues;
+import com.alon_gazit.model.Symbol;
 import com.alon_gazit.risk.RiskManagement;
 import com.alon_gazit.strategy.Strategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class RealtimeResultsCalculatorService {
 
     public List<Double> calcRealtimeResults(){
         List<Double> result = new ArrayList<Double>();
-        List<String> symbols = symbolsDAO.getSymbols();
-        symbols.forEach(symbol-> result.add(calcRealtimeResultsForSymbol(symbol)) );
+        List<Symbol> symbols = symbolsDAO.getSymbols();
+        symbols.forEach(symbol-> result.add(calcRealtimeResultsForSymbol(symbol.getName())) );
         return result;
     }
 

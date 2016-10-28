@@ -1,10 +1,15 @@
 package com.alon_gazit.dao;
 
+import com.alon_gazit.model.Symbol;
 import com.alon_gazit.risk.BasicRiskManagement;
 import com.alon_gazit.risk.RiskManagement;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,23 +17,26 @@ import java.util.Map;
  */
 @Component
 public class RiskManagementDAO {
-    private static Map<String,RiskManagement> riskManagementMap = new HashMap<String, RiskManagement>();
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
-    static {
-        riskManagementMap.put("SPY", new BasicRiskManagement());
-        riskManagementMap.put("EEM", new BasicRiskManagement());
-        riskManagementMap.put("DXJ", new BasicRiskManagement());
-        riskManagementMap.put("GDXJ", new BasicRiskManagement());
-        riskManagementMap.put("JNUG", new BasicRiskManagement());
-        riskManagementMap.put("USO", new BasicRiskManagement());
-        riskManagementMap.put("VXX", new BasicRiskManagement());
-        riskManagementMap.put("UVXY", new BasicRiskManagement());
-        riskManagementMap.put("TLT", new BasicRiskManagement());
-        riskManagementMap.put("YCS", new BasicRiskManagement());
-        riskManagementMap.put("EUO" , new BasicRiskManagement());
-     }
+    private static final String SQL_SELECT_QUERY = "select * from RISK_MANAGEMENT where STOCK_ID=?";
 
-    public RiskManagement getRiskManagement(String symbol){
-        return riskManagementMap.get(symbol);
+    public RiskManagement getRiskManagement(Symbol symbol){
+        Map<String, Object> row = jdbcTemplate.queryForMap(SQL_SELECT_QUERY,symbol.getId());
+        RiskManagement answer = null;
+        try {
+            Class answerClass = Class.forName((String)row.get("RISK_MANAGEMENT_CLASS"));
+            try {
+                answer = (RiskManagement)answerClass.newInstance();
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return answer;
     }
 }

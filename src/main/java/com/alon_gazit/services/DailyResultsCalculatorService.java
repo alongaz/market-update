@@ -7,6 +7,7 @@ import com.alon_gazit.dao.SymbolsDAO;
 import com.alon_gazit.model.CalculationResult;
 import com.alon_gazit.model.ExposureValues;
 import com.alon_gazit.model.StrategyValues;
+import com.alon_gazit.model.Symbol;
 import com.alon_gazit.risk.RiskManagement;
 import com.alon_gazit.strategy.Strategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,23 +29,23 @@ public class DailyResultsCalculatorService {
     @Autowired
     private SymbolsDAO symbolsDAO;
     @Autowired
-    StrategyDAO strategyDAO;
+    private  StrategyDAO strategyDAO;
 
     public List<CalculationResult> calcDailyResults(){
         List<CalculationResult> result = new ArrayList<CalculationResult>();
-        List<String> symbols = symbolsDAO.getSymbols();
+        List<Symbol> symbols = symbolsDAO.getSymbols();
         symbols.forEach(symbol-> result.add(calcDailyResultsForSymbol(symbol)) );
         return result;
     }
 
-    private CalculationResult calcDailyResultsForSymbol(String symbol){
+    private CalculationResult calcDailyResultsForSymbol(Symbol symbol){
         CalculationResult result = new CalculationResult();
-        List<String[]> symbolHistory = historyCrawler.getHistory(symbol);
+        List<String[]> symbolHistory = historyCrawler.getHistory(symbol.getName());
         Strategy strategy = strategyDAO.getStrategy(symbol);
-        StrategyValues strategyValues =strategy.getStrategyValues(symbol,symbolHistory);
+        StrategyValues strategyValues =strategy.getStrategyValues(symbol.getName(),symbolHistory);
         RiskManagement riskManagement = riskManagementDAO.getRiskManagement(symbol);
-        ExposureValues exposureValues = riskManagement.getExposureDetails(symbol,symbolHistory);
-        result.setSymbol(symbol);
+        ExposureValues exposureValues = riskManagement.getExposureDetails(symbol.getName(),symbolHistory);
+        result.setSymbol(symbol.getName());
         result.setLastPrice(Double.parseDouble(symbolHistory.get(1)[4]));
         result.setEntryPrice(strategyValues.getEntryPrice());
         result.setExitPrice(strategyValues.getStopLost());
