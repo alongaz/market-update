@@ -3,8 +3,8 @@ package com.alon_gazit.model;
 /**
  * Data structure
  */
-public class CalculationResult {
-  private String symbol;
+public class StockData {
+  private Symbol symbol;
   private double lastPrice;
   private double entryPrice;
   private double exitPrice;
@@ -12,11 +12,11 @@ public class CalculationResult {
   private double positionSize;
 
 
-  public String getSymbol() {
+  public Symbol getSymbol() {
     return symbol;
   }
 
-  public void setSymbol(String symbol) {
+  public void setSymbol(Symbol symbol) {
     this.symbol = symbol;
   }
 

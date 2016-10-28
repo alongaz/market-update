@@ -2,9 +2,10 @@ package com.alon_gazit.services;
 
 import com.alon_gazit.crawler.YahooHistoryCrawler;
 import com.alon_gazit.dao.RiskManagementDAO;
+import com.alon_gazit.dao.StockDataDAO;
 import com.alon_gazit.dao.StrategyDAO;
 import com.alon_gazit.dao.SymbolsDAO;
-import com.alon_gazit.model.CalculationResult;
+import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.ExposureValues;
 import com.alon_gazit.model.StrategyValues;
 import com.alon_gazit.model.Symbol;
@@ -30,22 +31,29 @@ public class DailyResultsCalculatorService {
     private SymbolsDAO symbolsDAO;
     @Autowired
     private  StrategyDAO strategyDAO;
+    @Autowired
+    private StockDataDAO stockDataDAO;
 
-    public List<CalculationResult> calcDailyResults(){
-        List<CalculationResult> result = new ArrayList<CalculationResult>();
+    public List<StockData> calcDailyResults(){
+        stockDataDAO.clearTable();
+        List<StockData> result = new ArrayList<StockData>();
         List<Symbol> symbols = symbolsDAO.getSymbols();
-        symbols.forEach(symbol-> result.add(calcDailyResultsForSymbol(symbol)) );
+        for (Symbol symbol: symbols) {
+            StockData stockData = calcDailyResultsForSymbol(symbol);
+            result.add(stockData);
+        }
+        stockDataDAO.insertStockDatas(result);
         return result;
     }
 
-    private CalculationResult calcDailyResultsForSymbol(Symbol symbol){
-        CalculationResult result = new CalculationResult();
-        List<String[]> symbolHistory = historyCrawler.getHistory(symbol.getName());
+    private StockData calcDailyResultsForSymbol(Symbol symbol){
+        StockData result = new StockData();
+        List<String[]> symbolHistory = historyCrawler.getHistory(symbol);
         Strategy strategy = strategyDAO.getStrategy(symbol);
-        StrategyValues strategyValues =strategy.getStrategyValues(symbol.getName(),symbolHistory);
+        StrategyValues strategyValues =strategy.getStrategyValues(symbol,symbolHistory);
         RiskManagement riskManagement = riskManagementDAO.getRiskManagement(symbol);
-        ExposureValues exposureValues = riskManagement.getExposureDetails(symbol.getName(),symbolHistory);
-        result.setSymbol(symbol.getName());
+        ExposureValues exposureValues = riskManagement.getExposureDetails(symbol,symbolHistory);
+        result.setSymbol(symbol);
         result.setLastPrice(Double.parseDouble(symbolHistory.get(1)[4]));
         result.setEntryPrice(strategyValues.getEntryPrice());
         result.setExitPrice(strategyValues.getStopLost());

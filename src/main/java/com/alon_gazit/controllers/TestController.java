@@ -1,7 +1,7 @@
 package com.alon_gazit.controllers;
 
 import com.alon_gazit.dao.SymbolsDAO;
-import com.alon_gazit.model.CalculationResult;
+import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.Symbol;
 import com.alon_gazit.services.DailyResultsCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class TestController {
 
     @RequestMapping(value = "/dailyResults", method = RequestMethod.GET)
   @ResponseBody
-  public List<CalculationResult> calcDailyResults(){
+  public List<StockData> calcDailyResults(){
         return dailyResultsCalculatorService.calcDailyResults();
   }
 

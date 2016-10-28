@@ -1,5 +1,6 @@
 package com.alon_gazit.crawler;
 
+import com.alon_gazit.model.Symbol;
 import com.opencsv.CSVReader;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +21,8 @@ public class YahooRealtimeCrawler {
     private static final String YAHOO_URL_PREFIX= "http://download.finance.yahoo.com/d/quotes.csv?s=";
     private static final String YAHOO_URL_SUFIX= "&f=sl1d1t1c1ohgv&e=.csv&columns='symbol,price,date,time,change,col1,high,low,col2";
 
-    public double getQuote(String symbol){
-        String yahooURL = YAHOO_URL_PREFIX+symbol+YAHOO_URL_SUFIX;
+    public double getQuote(Symbol symbol){
+        String yahooURL = YAHOO_URL_PREFIX+symbol.getName()+YAHOO_URL_SUFIX;
 
         CSVReader reader = null;
         String[] result = null;
@@ -50,7 +51,7 @@ public class YahooRealtimeCrawler {
 
     public static void main(String[] args){
         YahooRealtimeCrawler realtimeCrawler = new YahooRealtimeCrawler();
-        realtimeCrawler.getQuote("SPY");
+        realtimeCrawler.getQuote(new Symbol(1,"SPY"));
     }
 
 }

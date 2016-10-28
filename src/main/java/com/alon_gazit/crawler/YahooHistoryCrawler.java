@@ -1,5 +1,6 @@
 package com.alon_gazit.crawler;
 
+import com.alon_gazit.model.Symbol;
 import com.opencsv.CSVReader;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,8 @@ public class YahooHistoryCrawler {
     private static final String YAHOO_URL_PREFIX= "http://chart.finance.yahoo.com/table.csv?s=";
     private static final String YAHOO_URL_SUFIX= "&a=9&b=6&c=2015&d=5&e=14&f=2048&g=d&ignore=.csv";
 
-    public List<String[]> getHistory(String symbol){
-        String yahooURL = YAHOO_URL_PREFIX+symbol+YAHOO_URL_SUFIX;
+    public List<String[]> getHistory(Symbol symbol){
+        String yahooURL = YAHOO_URL_PREFIX+symbol.getName()+YAHOO_URL_SUFIX;
 
         CSVReader reader = null;
         List<String[]> result = null;

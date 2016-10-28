@@ -1,6 +1,7 @@
 package com.alon_gazit.strategy;
 
 import com.alon_gazit.model.StrategyValues;
+import com.alon_gazit.model.Symbol;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,7 +16,7 @@ public abstract class BasicStrategy implements Strategy {
     protected abstract double getStrategyStopLost(List<String[]> symbolHistory);
 
     @Override
-    public StrategyValues getStrategyValues(String symbol, List<String[]> symbolHistory) {
+    public StrategyValues getStrategyValues(Symbol symbol, List<String[]> symbolHistory) {
         StrategyValues answer = new StrategyValues();
         answer.setName(symbol);
         answer.setEntryPrice(getStrategyEntryPrice(symbolHistory));

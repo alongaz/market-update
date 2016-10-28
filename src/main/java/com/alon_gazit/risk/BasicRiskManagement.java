@@ -1,6 +1,7 @@
 package com.alon_gazit.risk;
 
 import com.alon_gazit.model.ExposureValues;
+import com.alon_gazit.model.Symbol;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public class BasicRiskManagement implements RiskManagement {
     private static final long accountSize = 8100;
     @Override
-    public ExposureValues getExposureDetails(String symbol, List<String[]> symbolHistory) {
+    public ExposureValues getExposureDetails(Symbol symbol, List<String[]> symbolHistory) {
         ExposureValues answer = new ExposureValues();
         answer.setDailyRange(getTrueRange(symbolHistory));
         answer.setPositionSize(getPositionSize(answer.getDailyRange()));

@@ -1,16 +1,11 @@
 package com.alon_gazit.services;
 
-import com.alon_gazit.crawler.YahooHistoryCrawler;
 import com.alon_gazit.crawler.YahooRealtimeCrawler;
 import com.alon_gazit.dao.RiskManagementDAO;
+import com.alon_gazit.dao.StockDataDAO;
 import com.alon_gazit.dao.StrategyDAO;
 import com.alon_gazit.dao.SymbolsDAO;
-import com.alon_gazit.model.CalculationResult;
-import com.alon_gazit.model.ExposureValues;
-import com.alon_gazit.model.StrategyValues;
 import com.alon_gazit.model.Symbol;
-import com.alon_gazit.risk.RiskManagement;
-import com.alon_gazit.strategy.Strategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,15 +26,18 @@ public class RealtimeResultsCalculatorService {
     private SymbolsDAO symbolsDAO;
     @Autowired
     StrategyDAO strategyDAO;
+    @Autowired
+    StockDataDAO stockDataDAO;
 
     public List<Double> calcRealtimeResults(){
         List<Double> result = new ArrayList<Double>();
         List<Symbol> symbols = symbolsDAO.getSymbols();
-        symbols.forEach(symbol-> result.add(calcRealtimeResultsForSymbol(symbol.getName())) );
+        symbols.forEach(symbol->
+                stockDataDAO.updateLastPrice(symbol,calcRealtimeResultsForSymbol(symbol)) );
         return result;
     }
 
-    private double calcRealtimeResultsForSymbol(String symbol){
+    private double calcRealtimeResultsForSymbol(Symbol symbol){
         return historyCrawler.getQuote(symbol);
     }
 }

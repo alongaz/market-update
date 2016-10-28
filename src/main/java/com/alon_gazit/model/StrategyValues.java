@@ -4,15 +4,15 @@ package com.alon_gazit.model;
  * Created by alon.g on 10/9/2016.
  */
 public class StrategyValues {
-    private String name;
+    private Symbol name;
     private double entryPrice;
     private double stopLost;
 
-    public String getName() {
+    public Symbol getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(Symbol name) {
         this.name = name;
     }
 
