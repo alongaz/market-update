@@ -1,7 +1,9 @@
 package com.alon_gazit.strategy;
 
+import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.StrategyValues;
 import com.alon_gazit.model.Symbol;
+import com.alon_gazit.model.SymbolMessage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,6 +17,8 @@ public abstract class BasicStrategy implements Strategy {
 
     protected abstract double getStrategyStopLost(List<String[]> symbolHistory);
 
+    public abstract SymbolMessage sendMessageDueToUpdate(double lastPriceUpdate , StockData stockData);
+
     @Override
     public StrategyValues getStrategyValues(Symbol symbol, List<String[]> symbolHistory) {
         StrategyValues answer = new StrategyValues();
@@ -23,6 +27,7 @@ public abstract class BasicStrategy implements Strategy {
         answer.setStopLost(getStrategyStopLost(symbolHistory));
         return answer;
     }
+
 
     protected double getMaxValue(final List<String[]> symbolHistory, int numOfDays){
         List<Double> array = new ArrayList<Double>();

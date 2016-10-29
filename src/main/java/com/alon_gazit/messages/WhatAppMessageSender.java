@@ -1,8 +1,10 @@
 package com.alon_gazit.messages;
 
 import com.alon_gazit.model.SymbolMessage;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -11,6 +13,7 @@ import java.net.URL;
 /**
  * Created by alon.g on 10/8/2016.
  */
+@Component
 public class WhatAppMessageSender {
     // No need to change the following two lines unless you have a Premium Account
     private static final String CLIENT_ID = "FREE_TRIAL_ACCOUNT";
@@ -26,13 +29,14 @@ public class WhatAppMessageSender {
         message.setSymbol("SPY");
         message.setText(" Pass 40 days highest high.");
         message.setPrice(200.15);
-        WhatAppMessageSender.sendMessage( message);
+        WhatAppMessageSender whatAppMessageSender = new WhatAppMessageSender();
+        whatAppMessageSender.sendMessage( message);
     }
 
     /**
      * Sends out a WhatsApp message via WhatsMate WA Gateway.
      */
-    public static void sendMessage(SymbolMessage message) throws Exception {
+    public void sendMessage(SymbolMessage message)  {
         // TODO: Should have used a 3rd party library to make a JSON string from an object
         String jsonPayload = new StringBuilder()
                 .append("{")
@@ -44,30 +48,34 @@ public class WhatAppMessageSender {
                 .append("\"")
                 .append("}")
                 .toString();
+        try {
+            URL url = new URL(WA_GATEWAY_URL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("X-WM-CLIENT-ID", CLIENT_ID);
+            conn.setRequestProperty("X-WM-CLIENT-SECRET", CLIENT_SECRET);
+            conn.setRequestProperty("Content-Type", "application/json");
 
-        URL url = new URL(WA_GATEWAY_URL);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("POST");
-        conn.setRequestProperty("X-WM-CLIENT-ID", CLIENT_ID);
-        conn.setRequestProperty("X-WM-CLIENT-SECRET", CLIENT_SECRET);
-        conn.setRequestProperty("Content-Type", "application/json");
+            OutputStream os = conn.getOutputStream();
+            os.write(jsonPayload.getBytes());
+            os.flush();
+            os.close();
 
-        OutputStream os = conn.getOutputStream();
-        os.write(jsonPayload.getBytes());
-        os.flush();
-        os.close();
+            int statusCode = conn.getResponseCode();
+            System.out.println("Response from WA Gateway: \n");
+            System.out.println("Status Code: " + statusCode);
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (statusCode == 200) ? conn.getInputStream() : conn.getErrorStream()
 
-        int statusCode = conn.getResponseCode();
-        System.out.println("Response from WA Gateway: \n");
-        System.out.println("Status Code: " + statusCode);
-        BufferedReader br = new BufferedReader(new InputStreamReader(
-                (statusCode == 200) ? conn.getInputStream() : conn.getErrorStream()
-        ));
-        String output;
-        while ((output = br.readLine()) != null) {
-            System.out.println(output);
+            ));
+            String output;
+            while ((output = br.readLine()) != null) {
+                System.out.println(output);
+            }
+            conn.disconnect();
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        conn.disconnect();
     }
 }

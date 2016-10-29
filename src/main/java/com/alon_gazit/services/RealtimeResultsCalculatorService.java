@@ -5,7 +5,11 @@ import com.alon_gazit.dao.RiskManagementDAO;
 import com.alon_gazit.dao.StockDataDAO;
 import com.alon_gazit.dao.StrategyDAO;
 import com.alon_gazit.dao.SymbolsDAO;
+import com.alon_gazit.messages.WhatAppMessageSender;
+import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.Symbol;
+import com.alon_gazit.model.SymbolMessage;
+import com.alon_gazit.strategy.Strategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,12 +32,22 @@ public class RealtimeResultsCalculatorService {
     StrategyDAO strategyDAO;
     @Autowired
     StockDataDAO stockDataDAO;
+    @Autowired
+    WhatAppMessageSender whatAppMessageSender;
 
     public List<Double> calcRealtimeResults(){
         List<Double> result = new ArrayList<Double>();
         List<Symbol> symbols = symbolsDAO.getSymbols();
-        symbols.forEach(symbol->
-                stockDataDAO.updateLastPrice(symbol,calcRealtimeResultsForSymbol(symbol)) );
+        for (Symbol symbol : symbols) {
+            StockData stockData = stockDataDAO.getStockData(symbol);
+            double lastPrice = calcRealtimeResultsForSymbol(symbol);
+            Strategy strategy = strategyDAO.getStrategy(symbol);
+            SymbolMessage message = strategy.sendMessageDueToUpdate(lastPrice,stockData);
+            if (message != null){
+                whatAppMessageSender.sendMessage(message);
+            }
+            stockDataDAO.updateLastPrice(symbol, lastPrice );
+        }
         return result;
     }
 

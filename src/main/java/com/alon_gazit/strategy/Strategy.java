@@ -1,7 +1,9 @@
 package com.alon_gazit.strategy;
 
+import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.StrategyValues;
 import com.alon_gazit.model.Symbol;
+import com.alon_gazit.model.SymbolMessage;
 
 import java.util.List;
 
@@ -10,4 +12,6 @@ import java.util.List;
  */
 public interface Strategy {
     public StrategyValues getStrategyValues(Symbol symbol, List<String[]> symbolHistory);
+
+    public SymbolMessage sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData);
 }

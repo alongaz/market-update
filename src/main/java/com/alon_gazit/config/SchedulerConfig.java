@@ -44,6 +44,7 @@ public class SchedulerConfig {
             answer.setJobFactory(jobFactory);
             answer.start();
             answer.scheduleJob(nigthlyJob(),nigthlyTrigger());
+            answer.triggerJob(new JobKey("NightlyJob"));
             answer.scheduleJob(realtimeJob(),realtimeTrigger());
         }catch (SchedulerException e){
             e.printStackTrace();
