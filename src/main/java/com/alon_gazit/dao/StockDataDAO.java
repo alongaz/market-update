@@ -30,11 +30,11 @@ public class StockDataDAO {
     public StockData getStockData(Symbol symbol){
         StockData answer = new StockData();
         Map<String, Object> row = jdbcTemplate.queryForMap(SQL_SELECT_QUERY,symbol.getId());
-        answer.setLastPrice(Double.parseDouble((String)row.get("LAST_STOCK_PRICE")));
-        answer.setEntryPrice(Double.parseDouble((String)row.get("ENTRY_PRICE")));
-        answer.setExitPrice(Double.parseDouble((String)row.get("EXIT_PRICE")));
-        answer.setRange(Double.parseDouble((String)row.get("RANGE")));
-        answer.setPositionSize(Integer.parseInt((String)row.get("POSITION_SIZE")));
+        answer.setLastPrice((Double)row.get("LAST_STOCK_PRICE"));
+        answer.setEntryPrice((Double)row.get("ENTRY_PRICE"));
+        answer.setExitPrice((Double)row.get("EXIT_PRICE"));
+        answer.setRange((Double)row.get("RANGE"));
+        answer.setPositionSize((Integer)row.get("POSITION_SIZE"));
         answer.setSymbol(symbol);
         return answer;
     }

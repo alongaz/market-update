@@ -6,6 +6,7 @@ import com.alon_gazit.dao.StockDataDAO;
 import com.alon_gazit.dao.StrategyDAO;
 import com.alon_gazit.dao.SymbolsDAO;
 import com.alon_gazit.messages.WhatAppMessageSender;
+import com.alon_gazit.model.StockDailyInfo;
 import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.Symbol;
 import com.alon_gazit.model.SymbolMessage;
@@ -40,18 +41,18 @@ public class RealtimeResultsCalculatorService {
         List<Symbol> symbols = symbolsDAO.getSymbols();
         for (Symbol symbol : symbols) {
             StockData stockData = stockDataDAO.getStockData(symbol);
-            double lastPrice = calcRealtimeResultsForSymbol(symbol);
+            StockDailyInfo stockDailyInfo = calcRealtimeResultsForSymbol(symbol);
             Strategy strategy = strategyDAO.getStrategy(symbol);
-            SymbolMessage message = strategy.sendMessageDueToUpdate(lastPrice,stockData);
+            SymbolMessage message = strategy.sendMessageDueToUpdate(stockDailyInfo.getLastPrice(),stockData);
             if (message != null){
                 whatAppMessageSender.sendMessage(message);
             }
-            stockDataDAO.updateLastPrice(symbol, lastPrice );
+            stockDataDAO.updateLastPrice(symbol, stockDailyInfo.getLastPrice() );
         }
         return result;
     }
 
-    private double calcRealtimeResultsForSymbol(Symbol symbol){
+    private StockDailyInfo calcRealtimeResultsForSymbol(Symbol symbol){
         return historyCrawler.getQuote(symbol);
     }
 }
