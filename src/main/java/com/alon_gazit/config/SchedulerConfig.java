@@ -66,7 +66,7 @@ public class SchedulerConfig {
         CronTriggerImpl trigger = new CronTriggerImpl();
         try {
             trigger.setKey(new TriggerKey("NightlyTrigger"));
-            trigger.setCronExpression("0 0 7am * * ?");
+            trigger.setCronExpression("0 0 3am * * ?");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -87,7 +87,7 @@ public class SchedulerConfig {
         CronTriggerImpl trigger = new CronTriggerImpl();
         try {
             trigger.setKey(new TriggerKey("RealtimeTrigger"));
-            trigger.setCronExpression("0 0/2 8-17 * * ?");
+            trigger.setCronExpression("0 0/20 6-15 * * ?");
          //   trigger.setCronExpression("0/20 * * * * ?");
         } catch (ParseException e) {
             e.printStackTrace();

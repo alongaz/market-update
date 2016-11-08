@@ -9,7 +9,7 @@ import java.util.List;
  * Created by alon.g on 10/10/2016.
  */
 public class BasicRiskManagement implements RiskManagement {
-    private static final long accountSize = 8100;
+    private static final long accountSize = 2300;
     @Override
     public ExposureValues getExposureDetails(Symbol symbol, List<String[]> symbolHistory) {
         ExposureValues answer = new ExposureValues();
