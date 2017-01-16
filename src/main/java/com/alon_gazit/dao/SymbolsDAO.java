@@ -23,6 +23,7 @@ public class SymbolsDAO {
     JdbcTemplate jdbcTemplate;
 
     private static final String SQL_SELECT_QUERY = "select * from SYMBOLS";
+    private static final String SQL_SELECT_BY_ID_QUERY = "select * from SYMBOLS where ID=?";
 
     private static List<String> SYMBOLS = new ArrayList<String>();
 
@@ -31,5 +32,10 @@ public class SymbolsDAO {
         List<Map<String, Object>> rows = jdbcTemplate.queryForList(SQL_SELECT_QUERY);
         rows.forEach(row-> answer.add(new Symbol((Integer)row.get("ID"),(String)row.get("NAME"))));
         return answer;
+    }
+
+    public Symbol getSymbols(Integer symbolID){
+        Map<String, Object> row = jdbcTemplate.queryForMap(SQL_SELECT_BY_ID_QUERY,symbolID);
+        return  new Symbol((Integer)row.get("ID"),(String)row.get("NAME"));
     }
 }

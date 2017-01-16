@@ -20,21 +20,24 @@ public class RiskManagementDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    private static final String SQL_SELECT_QUERY = "select * from RISK_MANAGEMENT where STOCK_ID=?";
+    private static final String SQL_SELECT_QUERY = "select * from RISK_MANAGEMENT_MAPPING where ID=?";
+    private static final String SQL_SELECT_QUERY_2 = "select * from RISK_MANAGEMENT,RISK_MANAGEMENT_MAPPING where " +
+            "RISK_MANAGEMENT.ID= RISK_MANAGEMENT_MAPPING.RISK_MANAGEMENT_ID and MAPPED_ID=?";
 
     public RiskManagement getRiskManagement(Symbol symbol){
-        Map<String, Object> row = jdbcTemplate.queryForMap(SQL_SELECT_QUERY,symbol.getId());
+        Map<String, Object> riskManagementMappingRow = jdbcTemplate.queryForMap(SQL_SELECT_QUERY,symbol.getId());
+
         RiskManagement answer = null;
         try {
-            Class answerClass = Class.forName((String)row.get("RISK_MANAGEMENT_CLASS"));
-            try {
-                answer = (RiskManagement)answerClass.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+            Integer riskManagementID = (Integer)riskManagementMappingRow.get("MAPPED_ID");
+            Map<String, Object> riskManagementRow = jdbcTemplate.queryForMap(SQL_SELECT_QUERY_2,riskManagementID);
+            Class answerClass = Class.forName((String)riskManagementRow.get("RISK_MANAGEMENT_CLASS"));
+            answer = (RiskManagement)answerClass.newInstance();
         } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         return answer;
