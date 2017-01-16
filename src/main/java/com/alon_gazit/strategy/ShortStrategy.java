@@ -3,18 +3,29 @@ package com.alon_gazit.strategy;
 import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.SymbolMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by alon.g on 10/9/2016.
  */
-public class ShortStrategy extends BasicStrategy {
-    private int numOfShortDays;
-    private int numOfStopDays;
+public class ShortStrategy extends TrendStrategy {
+    protected int numOfShortDays;
+    protected int numOfStopDays;
 
-    public ShortStrategy(int numOfShortDays, int numOfStopDays) {
+    public int getNumOfShortDays() {return numOfShortDays;}
+
+    public void setNumOfShortDays(int numOfShortDays) {this.numOfShortDays = numOfShortDays;}
+
+    public int getNumOfStopDays() {return numOfStopDays;}
+
+    public void setNumOfStopDays(int numOfStopDays) {this.numOfStopDays = numOfStopDays;}
+
+
+    public ShortStrategy(int numOfShortDays, int numOfStopDays,int numOfDaysForMovingAverage) {
         this.numOfShortDays = numOfShortDays;
         this.numOfStopDays = numOfStopDays;
+        this.numOfDaysForMovingAverage = numOfDaysForMovingAverage;
     }
 
     @Override
@@ -28,7 +39,7 @@ public class ShortStrategy extends BasicStrategy {
     }
 
     @Override
-    public SymbolMessage sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData) {
+    public List<SymbolMessage> sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData) {
         SymbolMessage message = null;
         if (stockData.getLastPrice()>lastPriceUpdate && stockData.getEntryPrice()>lastPriceUpdate){
             message = new SymbolMessage();
@@ -41,7 +52,9 @@ public class ShortStrategy extends BasicStrategy {
             message.setText(" Pass "+ numOfStopDays +" days highest high. Exit Position");
             message.setPrice(lastPriceUpdate);
         }
-        return message;
+        List<SymbolMessage> ansewr = new ArrayList<>();
+        ansewr.add(message);
+        return ansewr;
     }
 
 }

@@ -17,14 +17,17 @@ public abstract class BasicStrategy implements Strategy {
 
     protected abstract double getStrategyStopLost(List<String[]> symbolHistory);
 
-    public abstract SymbolMessage sendMessageDueToUpdate(double lastPriceUpdate , StockData stockData);
+    public abstract List<SymbolMessage> sendMessageDueToUpdate(double lastPriceUpdate , StockData stockData);
 
     @Override
-    public StrategyValues getStrategyValues(Symbol symbol, List<String[]> symbolHistory) {
-        StrategyValues answer = new StrategyValues();
-        answer.setName(symbol);
-        answer.setEntryPrice(getStrategyEntryPrice(symbolHistory));
-        answer.setStopLost(getStrategyStopLost(symbolHistory));
+    public List<StrategyValues> getStrategyValues(Symbol symbol, List<String[]> symbolHistory) {
+        StrategyValues values = new StrategyValues();
+        values.setName(symbol);
+        values.setStrategy(this);
+        values.setEntryPrice(getStrategyEntryPrice(symbolHistory));
+        values.setStopLost(getStrategyStopLost(symbolHistory));
+        List<StrategyValues> answer = new ArrayList<>();
+        answer.add(values);
         return answer;
     }
 

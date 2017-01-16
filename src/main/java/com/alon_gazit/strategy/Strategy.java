@@ -11,7 +11,7 @@ import java.util.List;
  * Created by alon.g on 10/9/2016.
  */
 public interface Strategy {
-    public StrategyValues getStrategyValues(Symbol symbol, List<String[]> symbolHistory);
+    public List<StrategyValues> getStrategyValues(Symbol symbol, List<String[]> symbolHistory);
 
-    public SymbolMessage sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData);
+    public List<SymbolMessage> sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData);
 }

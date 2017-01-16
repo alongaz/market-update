@@ -4,18 +4,20 @@ import com.alon_gazit.messages.WhatAppMessageSender;
 import com.alon_gazit.model.StockData;
 import com.alon_gazit.model.SymbolMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by alon.g on 10/9/2016.
  */
-public class LongStrategy extends BasicStrategy{
-    private int numOfLongDays;
-    private int numOfStopDays;
+public class LongStrategy extends TrendStrategy{
+    protected int numOfLongDays;
+    protected int numOfStopDays;
 
-    public LongStrategy(int numOfLongDays, int numOfStopDays) {
+    public LongStrategy(int numOfLongDays, int numOfStopDays, int numOfDaysForMovingAverage) {
         this.numOfLongDays = numOfLongDays;
         this.numOfStopDays = numOfStopDays;
+        this.numOfDaysForMovingAverage = numOfDaysForMovingAverage;
     }
 
     @Override
@@ -29,7 +31,7 @@ public class LongStrategy extends BasicStrategy{
     }
 
     @Override
-    public SymbolMessage sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData) {
+    public List<SymbolMessage> sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData) {
         SymbolMessage message = null;
         if (stockData.getLastPrice()<lastPriceUpdate && stockData.getEntryPrice()<lastPriceUpdate){
             message = new SymbolMessage();
@@ -42,6 +44,16 @@ public class LongStrategy extends BasicStrategy{
             message.setText(" Pass "+ numOfStopDays +" days lowest low. Exit Position");
             message.setPrice(lastPriceUpdate);
         }
-        return message;
+        List<SymbolMessage> ansewr = new ArrayList<>();
+        ansewr.add(message);
+        return ansewr;
     }
+
+    public int getNumOfLongDays() {return numOfLongDays;}
+
+    public void setNumOfLongDays(int numOfLongDays) {this.numOfLongDays = numOfLongDays;}
+
+    public int getNumOfStopDays() {return numOfStopDays;}
+
+    public void setNumOfStopDays(int numOfStopDays) {this.numOfStopDays = numOfStopDays;}
 }
