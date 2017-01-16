@@ -12,6 +12,8 @@ public class TrendStrategyValues extends StrategyValues {
         this.setEntryPrice(copy.getEntryPrice());
         this.setStopLost(copy.getStopLost());
         this.setStrategy(copy.getStrategy());
+        this.setPreviousEntryPrice(copy.getPreviousEntryPrice());
+        this.setPreviousStopLost(copy.getPreviousStopLost());
     }
 
     public double getMovingAverage() {return movingAverage;}

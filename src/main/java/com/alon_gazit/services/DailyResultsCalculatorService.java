@@ -61,6 +61,8 @@ public class DailyResultsCalculatorService {
             result.setLastPrice(Double.parseDouble(symbolHistory.get(1)[4]));
             result.setEntryPrice(value.getEntryPrice());
             result.setExitPrice(value.getStopLost());
+            result.setPreviousEntryPrice(value.getPreviousEntryPrice());
+            result.setPreviousExitPrice(value.getPreviousStopLost());
             result.setRange(exposureValues.getDailyRange());
             result.setPositionSize(exposureValues.getPositionSize());
             result.setMovingAverage(((TrendStrategyValues)value).getMovingAverage());

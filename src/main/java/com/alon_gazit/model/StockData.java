@@ -11,6 +11,8 @@ public class StockData {
   private double lastPrice;
   private double entryPrice;
   private double exitPrice;
+  private double previousEntryPrice;
+  private double previousExitPrice;
   private double range;
   private double positionSize;
   private double movingAverage;
@@ -66,4 +68,12 @@ public class StockData {
   public Strategy getStrategy() {return strategy;}
 
   public void setStrategy(Strategy strategy) {this.strategy = strategy;}
+
+  public double getPreviousEntryPrice() {return previousEntryPrice;}
+
+  public void setPreviousEntryPrice(double previousEntryPrice) {this.previousEntryPrice = previousEntryPrice;}
+
+  public double getPreviousExitPrice() {return previousExitPrice;}
+
+  public void setPreviousExitPrice(double previousExitPrice) {this.previousExitPrice = previousExitPrice;}
 }

@@ -31,6 +31,16 @@ public class LongStrategy extends TrendStrategy{
     }
 
     @Override
+    protected double getStrategyPreviousEntryPrice(List<String[]> symbolHistory) {
+        return getMaxValue(symbolHistory.subList(1,symbolHistory.size()),numOfLongDays);
+    }
+
+    @Override
+    protected double getStrategyPreviousStopLost(List<String[]> symbolHistory) {
+        return getMinValue(symbolHistory.subList(1,symbolHistory.size()), numOfStopDays);
+    }
+
+    @Override
     public List<SymbolMessage> sendMessageDueToUpdate(double lastPriceUpdate, StockData stockData) {
         SymbolMessage message = null;
         if (stockData.getLastPrice()<lastPriceUpdate && stockData.getEntryPrice()<lastPriceUpdate){

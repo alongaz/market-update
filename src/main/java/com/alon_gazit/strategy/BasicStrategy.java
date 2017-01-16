@@ -17,6 +17,10 @@ public abstract class BasicStrategy implements Strategy {
 
     protected abstract double getStrategyStopLost(List<String[]> symbolHistory);
 
+    protected abstract double getStrategyPreviousEntryPrice(List<String[]> symbolHistory);
+
+    protected abstract double getStrategyPreviousStopLost(List<String[]> symbolHistory);
+
     public abstract List<SymbolMessage> sendMessageDueToUpdate(double lastPriceUpdate , StockData stockData);
 
     @Override
@@ -26,6 +30,8 @@ public abstract class BasicStrategy implements Strategy {
         values.setStrategy(this);
         values.setEntryPrice(getStrategyEntryPrice(symbolHistory));
         values.setStopLost(getStrategyStopLost(symbolHistory));
+        values.setPreviousEntryPrice(getStrategyPreviousEntryPrice(symbolHistory));
+        values.setPreviousStopLost(getStrategyPreviousStopLost(symbolHistory));
         List<StrategyValues> answer = new ArrayList<>();
         answer.add(values);
         return answer;

@@ -10,6 +10,8 @@ public class StrategyValues {
     private Strategy strategy;
     private double entryPrice;
     private double stopLost;
+    private double previousEntryPrice;
+    private double previousStopLost;
 
     public Symbol getName() {
         return name;
@@ -65,4 +67,12 @@ public class StrategyValues {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
+    public double getPreviousEntryPrice() {return previousEntryPrice;}
+
+    public void setPreviousEntryPrice(double previousEntryPrice) {this.previousEntryPrice = previousEntryPrice;}
+
+    public double getPreviousStopLost() {return previousStopLost;}
+
+    public void setPreviousStopLost(double previousStopLost) {this.previousStopLost = previousStopLost;}
 }
