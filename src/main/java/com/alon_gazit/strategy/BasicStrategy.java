@@ -35,14 +35,16 @@ public abstract class BasicStrategy implements Strategy {
     protected double getMaxValue(final List<String[]> symbolHistory, int numOfDays){
         List<Double> array = new ArrayList<Double>();
         for (int i = 1; i <= numOfDays ; i++ )
-            array.add(Double.parseDouble(symbolHistory.get(i)[2]));
+            array.add(Double.parseDouble(symbolHistory.get(i)[2])*
+                    (Double.parseDouble(symbolHistory.get(i)[6])/Double.parseDouble(symbolHistory.get(i)[4])));
         return Collections.max(array);
     }
 
     protected double getMinValue(final List<String[]> symbolHistory, int numOfDays){
         List<Double> array = new ArrayList<Double>();
         for (int i = 1; i <= numOfDays ; i++ )
-            array.add(Double.parseDouble(symbolHistory.get(i)[3]));
+            array.add(Double.parseDouble(symbolHistory.get(i)[3])*
+                    (Double.parseDouble(symbolHistory.get(i)[6])/Double.parseDouble(symbolHistory.get(i)[4])));
         return Collections.min(array);
     }
 }
