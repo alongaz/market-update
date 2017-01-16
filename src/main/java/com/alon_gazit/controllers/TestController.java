@@ -6,6 +6,7 @@ import com.alon_gazit.model.Symbol;
 import com.alon_gazit.services.DailyResultsCalculatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,10 +23,10 @@ public class TestController {
     @Autowired
     DailyResultsCalculatorService dailyResultsCalculatorService;
 
-    @RequestMapping(value = "/dailyResults", method = RequestMethod.GET)
+    @RequestMapping(value = "/dailyResults/{strategy}", method = RequestMethod.GET)
   @ResponseBody
-  public List<StockData> calcDailyResults(){
-        return dailyResultsCalculatorService.calcDailyResults();
+  public List<StockData> calcDailyResults( @PathVariable("strategy") String strategy){
+        return dailyResultsCalculatorService.calcDailyResults(strategy);
   }
 
 
