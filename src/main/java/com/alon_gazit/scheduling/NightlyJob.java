@@ -18,6 +18,7 @@ public class NightlyJob implements Job {
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        dailyResultsCalculatorService.calcDailyResults();
+        dailyResultsCalculatorService.calcDailyResults("Short Term Turtle");
+        dailyResultsCalculatorService.calcDailyResults("Long Term Turtle");
     }
 }
