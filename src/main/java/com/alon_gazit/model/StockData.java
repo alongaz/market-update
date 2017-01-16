@@ -1,16 +1,27 @@
 package com.alon_gazit.model;
 
+import com.alon_gazit.strategy.Strategy;
+
 /**
  * Data structure
  */
 public class StockData {
   private Symbol symbol;
+  private Strategy strategy;
   private double lastPrice;
   private double entryPrice;
   private double exitPrice;
   private double range;
   private double positionSize;
+  private double movingAverage;
 
+  public double getMovingAverage() {
+    return movingAverage;
+  }
+
+  public void setMovingAverage(double movingAverage) {
+    this.movingAverage = movingAverage;
+  }
 
   public Symbol getSymbol() {
     return symbol;
@@ -51,4 +62,8 @@ public class StockData {
   public double getEntryPrice() {return entryPrice;}
 
   public void setEntryPrice(double entryPrice) {this.entryPrice = entryPrice;}
+
+  public Strategy getStrategy() {return strategy;}
+
+  public void setStrategy(Strategy strategy) {this.strategy = strategy;}
 }
