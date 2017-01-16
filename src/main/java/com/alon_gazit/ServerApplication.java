@@ -27,6 +27,7 @@ public class ServerApplication {
 
     public static void main(String[] args) {
         log.info("Starting server...");
+        log.debug("test");
         SpringApplication.run(ServerApplication.class, args);
     }
 }
