@@ -42,11 +42,10 @@ public class RealtimeResultsCalculatorService {
         for (Symbol symbol : symbols) {
             StockData stockData = stockDataDAO.getStockData(symbol);
             StockDailyInfo stockDailyInfo = calcRealtimeResultsForSymbol(symbol);
-            Strategy strategy = strategyDAO.getStrategy(symbol);
-            SymbolMessage message = strategy.sendMessageDueToUpdate(stockDailyInfo.getLastPrice(),stockData);
-            if (message != null){
-                whatAppMessageSender.sendMessage(message);
-            }
+            List<Strategy> strategies = strategyDAO.getStrategy(symbol);
+            List<SymbolMessage> messages = new ArrayList<>();
+            strategies.forEach(strategy -> messages.addAll(strategy.sendMessageDueToUpdate(stockDailyInfo.getLastPrice(),stockData)));
+            messages.forEach(message-> whatAppMessageSender.sendMessage(message));
             stockDataDAO.updateLastPrice(symbol, stockDailyInfo.getLastPrice() );
         }
         return result;
