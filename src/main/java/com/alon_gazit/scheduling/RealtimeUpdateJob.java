@@ -12,7 +12,7 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 /**
  * Created by alon.g on 10/23/2016.
  */
-@Component
+//@Component
 public class RealtimeUpdateJob implements Job {
 
     @Autowired

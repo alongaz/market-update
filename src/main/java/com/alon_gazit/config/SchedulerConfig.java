@@ -45,7 +45,7 @@ public class SchedulerConfig {
             answer.start();
             answer.scheduleJob(nigthlyJob(),nigthlyTrigger());
             answer.triggerJob(new JobKey("NightlyJob"));
-            answer.scheduleJob(realtimeJob(),realtimeTrigger());
+         //   answer.scheduleJob(realtimeJob(),realtimeTrigger());
         }catch (SchedulerException e){
             e.printStackTrace();
         }
@@ -74,7 +74,7 @@ public class SchedulerConfig {
 
     }
 
-    @Bean
+   /* @Bean
     public JobDetail realtimeJob(){
         JobDetailImpl answer = new JobDetailImpl();
         answer.setJobClass(RealtimeUpdateJob.class);
@@ -94,7 +94,7 @@ public class SchedulerConfig {
         }
         return trigger;
 
-    }
+    }*/
 
 
 
