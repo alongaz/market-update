@@ -9,17 +9,18 @@ import java.util.List;
  * Created by alon.g on 10/10/2016.
  */
 public class BasicRiskManagement implements RiskManagement {
-    private static final long accountSize = 2300;
+    private static final long accountSize = 230000;
+    private static final double riskPercentage = 0.01;
     @Override
     public ExposureValues getExposureDetails(Symbol symbol, List<String[]> symbolHistory) {
         ExposureValues answer = new ExposureValues();
         answer.setDailyRange(getTrueRange(symbolHistory));
-        answer.setPositionSize(getPositionSize(answer.getDailyRange()));
+        answer.setPositionSize(getPositionSize(answer.getDailyRange(),Double.parseDouble(symbolHistory.get(1)[4])));
         return answer;
     }
 
-    private long getPositionSize(double range){
-        return Math.round(accountSize/range);
+    private long getPositionSize(double range,double lastPrice){
+        return Math.round((accountSize)*(riskPercentage/range));
     }
 
     private double getTrueRange(List<String[]> symbolHistory){
