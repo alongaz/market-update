@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BasicRiskManagement implements RiskManagement {
     private static final long accountSize = 230000;
-    private static final double riskPercentage = 0.01;
+    private static final double riskPercentage = 0.005;
     @Override
     public ExposureValues getExposureDetails(Symbol symbol, List<String[]> symbolHistory) {
         ExposureValues answer = new ExposureValues();
