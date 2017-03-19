@@ -25,7 +25,7 @@ public class BasicRiskManagement implements RiskManagement {
 
     private double getTrueRange(List<String[]> symbolHistory){
         double sum = 0;
-        for (int i=1 ; i<=20 ; i++){
+        for (int i=1 ; i<=50 ; i++){
             double high = Double.parseDouble(symbolHistory.get(i)[2]);
             double low = Double.parseDouble(symbolHistory.get(i)[3]);
             double privClose = Double.parseDouble(symbolHistory.get(i+1)[4]);
@@ -34,7 +34,7 @@ public class BasicRiskManagement implements RiskManagement {
                     Math.abs(low-privClose));
             sum += maxVal;
         }
-        return sum/20;
+        return sum/50;
 
     }
 
